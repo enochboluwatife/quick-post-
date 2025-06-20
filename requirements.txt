@@ -4,3 +4,4 @@ django-cors-headers>=3.10
 djangorestframework-simplejwt>=4.8
 psycopg2>=2.9
 django-filter
+python-dotenv
