@@ -1,0 +1,38 @@
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./quickpost:/app  # Mount only the quickpost folder where manage.py is
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DEBUG=True
+      - DJANGO_DB_HOST=db
+      - DJANGO_DB_PORT=5432
+      - DJANGO_DB_NAME=postgres
+      - DJANGO_DB_USER=postgres
+      - DJANGO_DB_PASSWORD=Boluwatife1
+    networks:
+      - quickpost-network
+
+  db:
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Boluwatife1
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    networks:
+      - quickpost-network
+
+volumes:
+  postgres_data:
+
+networks:
+  quickpost-network:
+    driver: bridge
